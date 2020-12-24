@@ -19,7 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   else {
     // $exists = false;
     if (($password == $cpassword)) {
-      $sql = "INSERT INTO `users` (`username`, `password`, `dt`) VALUES ('$username', '$password', CURRENT_TIMESTAMP)";
+      $hash = password_hash($password, PASSWORD_DEFAULT);
+      $sql = "INSERT INTO `users` (`username`, `password`, `dt`) VALUES ('$username', '$hash', CURRENT_TIMESTAMP)";
       $result = mysqli_query($conn, $sql);
       if ($result) {
         $showAlert = true;
@@ -91,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             id="username"
             name="username"
             aria-describedby="emailHelp"
+            maxlength="11"
             required
           />
         </div>
@@ -101,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             class="form-control"
             id="password"
             name="password"
+            maxlength="23"
             required
           />
         </div>
